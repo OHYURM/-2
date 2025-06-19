@@ -2,55 +2,52 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>BDSM 성향 테스트 - 상담 신청</title>
+  <title>상담 신청</title>
   <style>
     body {
-      background: #111;
-      color: white;
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
       padding: 20px;
-    }
-    h1 {
-      color: hotpink;
-    }
-    form {
-      margin-top: 30px;
-      max-width: 400px;
+      border-radius: 12px;
+      background: #f8f8f8;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     input, textarea {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 5px;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
       font-size: 16px;
     }
     button {
-      background-color: hotpink;
+      background-color: #4CAF50;
       color: white;
-      padding: 12px;
-      font-size: 16px;
+      padding: 12px 20px;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
+      font-size: 16px;
     }
-    #responseMsg {
-      margin-top: 20px;
-      color: lightgreen;
-      font-weight: bold;
+    button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
 <body>
-  <h1>BDSM 성향 테스트 - 상담 신청</h1>
-  
-<form action="https://script.google.com/macros/s/AKfycbw6tF_QxkjroMrSu3mZACKSBvX__dP7kiB8OltdGmeHmdsyyO569-jOjtBbBlYkQqQc/exec" method="POST">
-    <input type="text" name="name" placeholder="이름" required />
-    <input type="tel" name="phone" placeholder="연락처 (예: 010-1234-5678)" required />
-    <textarea name="message" placeholder="궁금한 내용을 적어주세요." required></textarea>
+  <h2>상담 신청</h2>
+  <form action="https://script.google.com/macros/s/AKfycbwA0ULm1AVFs2Y1f7v6Rkk2mHJMk7HN67R7VnPhKsw98l4q81AeAf5_5bFei2DE9jftpQ/exec" method="POST">
+    <label for="name">이름</label>
+    <input type="text" name="name" id="name" required>
+
+    <label for="phone">연락처</label>
+    <input type="text" name="phone" id="phone" required>
+
+    <label for="message">상담 내용</label>
+    <textarea name="message" id="message" rows="5" required></textarea>
+
     <button type="submit">상담 신청</button>
   </form>
-
-  <p id="responseMsg">📩 전송 후 잠시만 기다려 주세요</p>
 </body>
 </html>
