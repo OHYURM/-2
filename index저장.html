@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>성적 취향 성향 테스트</title>
+  <style>
+    body { background: #111; color: white; font-family: sans-serif; padding: 20px; }
+    h1 { color: hotpink; }
+    .question { margin-bottom: 25px; }
+    .scale { display: flex; gap: 15px; margin-top: 10px; }
+    .scale label input { width: 30px; height: 30px; transform: scale(1.4); }
+    .scale label { font-size: 20px; cursor: pointer; }
+    #result img { max-width: 300px; display: block; margin-top: 20px; }
+    #formSection { display: none; margin-top: 40px; background: #222; padding: 20px; border-radius: 8px; }
+    input[type="text"], input[type="email"] { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 6px; border: none; }
+    button.copyBtn { padding: 10px 20px; font-size: 16px; background-color: hotpink; color: white; border: none; cursor: pointer; border-radius: 6px; }
+    .coupon { margin-top: 20px; color: #ffcc99; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>성향 테스트</h1>
+  <p>각 문장에 대해 1(전혀 아님) ~ 5(매우 동의)에 체크해 주세요.</p>
+  <form id="quizForm"><div id="questions"></div><button type="submit">결과 보기</button></form>
+  <div id="result"></div>
+  <div id="formSection">
+    <h2>결과 링크를 저장하려면 정보를 입력해주세요</h2>
+    <input type="text" id="name" placeholder="이름">
+    <input type="email" id="email" placeholder="이메일">
+    <input type="text" id="phone" placeholder="전화번호">
+    <button class="copyBtn" onclick="copyLink()">결과 링크 복사하기</button>
+    <div class="coupon">🎁 추천 성인용품 5,000원 할인쿠폰이 발급되었습니다!
+    </div>
+  </div>
+<script>
+const questions = [
+  { q: "나는 상대방에게 명령하는 것을 즐긴다.", cat: "Dominant_Aggressive" },
+  { q: "나는 상대방이 나의 리드를 따를 때 쾌감을 느낀다.", cat: "Dominant_Aggressive" },
+  { q: "나는 전략적으로 상황을 통제하고 리드하는 것을 선호한다.", cat: "Dominant_Strategic" },
+  { q: "나는 감정을 존중하며 섬세하게 이끄는 관계를 선호한다.", cat: "Dominant_Gentle" },
+  { q: "나는 상대방이 편안하게 느끼도록 배려하면서 리드한다.", cat: "Dominant_Gentle" },
+  { q: "나는 상대방의 지시에 따를 때 마음이 편안해진다.", cat: "Submissive_Passive" },
+  { q: "나는 스스로 판단하기보다는 이끌려가는 것이 좋다.", cat: "Submissive_Passive" },
+  { q: "나는 자발적으로 복종하거나 무릎 꿇는 상상을 한다.", cat: "Submissive_Voluntary" },
+  { q: "나는 주도권을 기꺼이 넘겨주는 것을 즐긴다.", cat: "Submissive_Voluntary" },
+  { q: "나는 복종 행위 자체에서 강한 쾌감을 느낀다.", cat: "Submissive_Pleasure" },
+  { q: "나는 촉각 자극에 민감하게 반응한다.", cat: "Sensory_Tactile" },
+  { q: "나는 시각적인 자극(외모, 옷차림 등)에 흥분한다.", cat: "Sensory_Visual" },
+  { q: "나는 속삭이는 말투나 음성에 약하다.", cat: "Sensory_Auditory" },
+  { q: "나는 발을 바라보거나 만질 때 성적으로 자극된다.", cat: "Fetish_Feet" },
+  { q: "나는 속옷이나 스타킹 등 의상에 성적 흥분을 느낀다.", cat: "Fetish_Clothing" },
+  { q: "나는 허벅지, 손 등 특정 신체 부위에 끌린다.", cat: "Fetish_Body" },
+  { q: "나는 연인의 외모가 자극적일 때 몰입도가 올라간다.", cat: "Sensory_Visual" },
+  { q: "나는 리드보다 따르는 게 편하다.", cat: "Submissive_Passive" },
+  { q: "나는 성적 상황에서 전략을 구상한다.", cat: "Dominant_Strategic" },
+  { q: "나는 상대의 목소리에서 가장 큰 자극을 받는다.", cat: "Sensory_Auditory" },
+  { q: "나는 누군가를 리드할 때 성취감을 느낀다.", cat: "Dominant_Strategic" },
+  { q: "나는 누군가의 허락을 기다릴 때 흥분한다.", cat: "Submissive_Voluntary" },
+  { q: "나는 가죽, 끈, 장비에 강한 페티쉬가 있다.", cat: "Fetish_Clothing" },
+  { q: "나는 상대의 손, 손끝, 손동작에 민감하게 반응한다.", cat: "Fetish_Body" },
+  { q: "나는 꾹 누르는 촉감이나 밀착감을 좋아한다.", cat: "Sensory_Tactile" },
+  { q: "나는 발에 키스하거나 핥는 상상을 자주 한다.", cat: "Fetish_Feet" },
+  { q: "나는 부드러운 말투와 지시에 자극을 받는다.", cat: "Sensory_Auditory" },
+  { q: "나는 상대방을 부드럽게 통제하는 것에 성취감을 느낀다.", cat: "Dominant_Gentle" },
+  { q: "나는 상대의 목소리에 따라 몰입도가 달라진다.", cat: "Sensory_Auditory" },
+  { q: "나는 밧줄, 제약, 구속에 성적 판타지가 있다.", cat: "Submissive_Pleasure" }
+];
+
+const resultMap = {
+  Dominant_Aggressive: { label: "공격적 도미넌트", fetish: "팬티 페티시", image: "images/dominant_aggressive.jpg", fetishImage: "images/panty.jpg" },
+  Dominant_Strategic: { label: "전략적 도미넌트", fetish: "속옷 페티시", image: "images/dominant_strategic.jpg", fetishImage: "images/panty.jpg" },
+  Dominant_Gentle: { label: "섬세한 도미넌트", fetish: "스킨십 페티시", image: "images/dominant_gentle.jpg", fetishImage: "images/skinship.jpg" },
+  Submissive_Passive: { label: "수동적 서브", fetish: "밧줄 페티시", image: "images/rope.jpg", fetishImage: "images/rope.jpg" },
+  Submissive_Voluntary: { label: "자발적 복종형", fetish: "밧줄 페티시", image: "images/rope.jpg", fetishImage: "images/rope.jpg" },
+  Submissive_Pleasure: { label: "쾌락 추종형", fetish: "밧줄 페티시", image: "images/rope.jpg", fetishImage: "images/rope.jpg" },
+  Sensory_Tactile: { label: "촉각 민감형", fetish: "스킨십 페티시", image: "images/skinship.jpg", fetishImage: "images/skinship.jpg" },
+  Sensory_Visual: { label: "시각 자극형", fetish: "시각 페티시", image: "images/visual.jpg", fetishImage: "images/visual.jpg" },
+  Sensory_Auditory: { label: "청각 민감형", fetish: "속삭임 페티시", image: "images/auditory.jpg", fetishImage: "images/auditory.jpg" },
+  Fetish_Feet: { label: "발 페티쉬형", fetish: "발 페티쉬", image: "images/feet.jpg", fetishImage: "images/feet.jpg" },
+  Fetish_Clothing: { label: "의상 페티쉬형", fetish: "스타킹/속옷", image: "images/clothing.jpg", fetishImage: "images/clothing.jpg" },
+  Fetish_Body: { label: "신체 집착형", fetish: "손/허벅지", image: "images/body.jpg", fetishImage: "images/body.jpg" }
+};
+
+const container = document.getElementById("questions");
+questions.forEach((item, index) => {
+  const qDiv = document.createElement("div");
+  qDiv.className = "question";
+  qDiv.innerHTML = `<p>${index + 1}. ${item.q}</p>`;
+  const scaleDiv = document.createElement("div");
+  scaleDiv.className = "scale";
+  for (let i = 1; i <= 5; i++) {
+    scaleDiv.innerHTML += `<label><input type="radio" name="q${index}" value="${i}" required> ${i}</label>`;
+  }
+  qDiv.appendChild(scaleDiv);
+  container.appendChild(qDiv);
+});
+
+document.getElementById("quizForm").onsubmit = function(e) {
+  e.preventDefault();
+  const scores = {};
+  questions.forEach((item, index) => {
+    const val = parseInt(document.querySelector(`input[name='q${index}']:checked`).value);
+    if (!scores[item.cat]) scores[item.cat] = 0;
+    scores[item.cat] += val;
+  });
+  const topType = Object.keys(scores).sort((a, b) => scores[b] - scores[a])[0];
+  const r = resultMap[topType];
+  document.getElementById("result").innerHTML = `
+    <h2>당신은 <span style='color:hotpink'>${r.label}</span>입니다.</h2>
+    <p>대표 페티쉬: <b>${r.fetish}</b></p>
+    <img src='${r.image}' alt='성향 이미지'>
+    <img src='${r.fetishImage}' alt='페티쉬 이미지'>`;
+  document.getElementById("formSection").style.display = "block";
+};
+
+function copyLink() {
+  const dummy = document.createElement("input");
+  const url = window.location.href + "?saved=true";
+  document.body.appendChild(dummy);
+  dummy.value = url;
+  dummy.select();
+  document.execCommand("copy");
+  document.body.removeChild(dummy);
+  alert("결과 링크가 복사되었습니다! 🎉");
+}
+</script>
+</body>
+</html>
+

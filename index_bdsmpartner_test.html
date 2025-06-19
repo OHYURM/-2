@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>BDSM 성향 테스트</title>
+  <style>
+    body { background-color: #111; color: #fff; font-family: sans-serif; padding: 20px; }
+    h1 { color: hotpink; }
+    .question { margin-bottom: 20px; }
+    .scale { display: flex; gap: 10px; margin-top: 5px; }
+    .scale label { cursor: pointer; font-size: 16px; }
+    input[type="radio"] { transform: scale(1.5); margin: 5px; }
+    #resultArea { margin-top: 30px; }
+    .bar { height: 20px; background: hotpink; margin-bottom: 5px; }
+    .result-entry { margin-bottom: 10px; }
+    #consultButton, #submitConsult { background: #ff69b4; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+    #consultForm { display: none; background: #222; padding: 20px; margin-top: 20px; border-radius: 10px; }
+    input[type="text"], input[type="email"] { width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>성적 취향 테스트</h1>
+  <form id="testForm">
+    <div id="questionContainer"></div>
+    <button type="submit">결과 보기</button>
+  </form>
+
+  <div id="resultArea"></div>
+
+  <div id="consultForm">
+    <h2>상담사 예약 신청</h2>
+    <p>설레는 예쁜 목소리로 상담사가 무료로 잠깐 전화드리겠습니다. 아래 양식을 작성해 주세요.</p>
+    <input type="text" placeholder="이름" />
+    <input type="text" placeholder="연락처" />
+    <input type="email" placeholder="이메일" />
+    <button id="submitConsult">제출</button>
+  </div>
+
+<script>
+const categories = [
+  "도미넌트", "서브", "스팽키", "헌터", "리틀", "브랫", "탑", "바텀",
+  "브렛 테이머", "마조히스트", "사디스트", "디그레이더", "리거", "페트", "오너", "대디/마미",
+  "서브미시브", "보스", "프레이", "바닐라"
+];
+
+const partners = {
+  "도미넌트": "모임에서 만난 리버스 스위치 타입",
+  "서브": "학교에서 만난 바닐라 타입",
+  "스팽키": "클럽에서 만난 페티시형 상대",
+  "헌터": "게임에서 만난 탐색가형 타입",
+  "리틀": "오래된 친구 타입",
+  "브랫": "SNS에서 만난 도발적인 상대",
+  "바닐라": "조용한 도서관에서 만난 순수한 상대"
+};
+
+const questions = [];
+for (let i = 1; i <= 49; i++) {
+  const cat = categories[i % categories.length];
+  questions.push({ text: `${i}. 나는 ${cat} 성향의 욕망을 느낀 적이 있다.`, cat });
+}
+
+const questionContainer = document.getElementById("questionContainer");
+questions.forEach((q, index) => {
+  const div = document.createElement("div");
+  div.className = "question";
+  div.innerHTML = `<p>${q.text}</p>`;
+  const scale = document.createElement("div");
+  scale.className = "scale";
+  for (let i = 1; i <= 5; i++) {
+    scale.innerHTML += `<label><input type="radio" name="q${index}" value="${i}" required> ${i}</label>`;
+  }
+  div.appendChild(scale);
+  questionContainer.appendChild(div);
+});
+
+document.getElementById("testForm").onsubmit = function(e) {
+  e.preventDefault();
+  const scores = {};
+  questions.forEach((q, i) => {
+    const val = parseInt(document.querySelector(`input[name="q${i}"]:checked`).value);
+    if (!scores[q.cat]) scores[q.cat] = 0;
+    scores[q.cat] += val;
+  });
+  const total = Object.values(scores).reduce((a, b) => a + b, 0);
+  const resultDiv = document.getElementById("resultArea");
+  resultDiv.innerHTML = "<h2>테스트 결과</h2>";
+  Object.entries(scores).forEach(([cat, val]) => {
+    const percent = ((val / total) * 100).toFixed(2);
+    resultDiv.innerHTML += `
+      <div class='result-entry'>
+        <strong>${cat}</strong>: ${percent}%<br>
+        <div class="bar" style="width:${percent}%"></div>
+      </div>`;
+  });
+
+  const topType = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
+  const partner = partners[topType] || "어딘가에서 운명처럼 만날 상대";
+
+  resultDiv.innerHTML += `<p><strong>추천 섹스 파트너 유형:</strong> ${partner}</p>`;
+  resultDiv.innerHTML += `<button id="consultButton">예쁜 상담사에게 상담받기 →</button>`;
+
+  document.getElementById("consultButton").onclick = () => {
+    document.getElementById("consultForm").style.display = "block";
+    window.scrollTo(0, document.body.scrollHeight);
+  };
+};
+
+document.getElementById("submitConsult").onclick = () => {
+  alert("상담사가 곧 연락드릴게요 💕");
+};
+</script>
+</body>
+</html>
