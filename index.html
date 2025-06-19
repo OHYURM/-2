@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>BDSM 성향 테스트 - 상담 신청</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px;
+    }
+    h1 {
+      color: hotpink;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+      max-width: 400px;
+    }
+    input, textarea {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #responseMsg {
+      margin-top: 20px;
+      font-weight: bold;
+      color: lightgreen;
+    }
+  </style>
+</head>
+<body>
+  <h1>BDSM 성향 테스트 - 상담 신청</h1>
+
+  <form action="https://script.google.com/macros/s/AKfycbzh1zQ3lkzWOcLeSReTDx6OHYNHbnCaxYJ2uukL_03Sr3gM6HpVkg9S1kwRBf09cMBQOg/exec" method="POST">
+    <input type="text" name="name" placeholder="이름" required />
+    <input type="tel" name="phone" placeholder="연락처 (예: 010-1234-5678)" required />
+    <textarea name="message" placeholder="궁금한 내용을 적어주세요." required></textarea>
+    <button type="submit">상담 신청</button>
+  </form>
+
+  <p id="responseMsg">※ 전송 후 잠시만 기다려 주세요</p>
+</body>
+</html>
