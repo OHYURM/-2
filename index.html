@@ -5,53 +5,52 @@
   <title>BDSM 성향 테스트 - 상담 신청</title>
   <style>
     body {
-      background-color: #111;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      padding: 40px;
+      background: #111;
+      color: white;
+      font-family: sans-serif;
+      padding: 20px;
     }
     h1 {
       color: hotpink;
     }
     form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 20px;
+      margin-top: 30px;
       max-width: 400px;
     }
     input, textarea {
+      width: 100%;
       padding: 10px;
-      border-radius: 5px;
+      margin-bottom: 15px;
       border: none;
+      border-radius: 5px;
       font-size: 16px;
     }
     button {
-      background-color: #ff69b4;
+      background-color: hotpink;
       color: white;
-      border: none;
       padding: 12px;
       font-size: 16px;
+      border: none;
       border-radius: 5px;
       cursor: pointer;
     }
     #responseMsg {
       margin-top: 20px;
-      font-weight: bold;
       color: lightgreen;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <h1>BDSM 성향 테스트 - 상담 신청</h1>
-
-  <form action="https://script.google.com/macros/s/AKfycbzh1zQ3lkzWOcLeSReTDx6OHYNHbnCaxYJ2uukL_03Sr3gM6HpVkg9S1kwRBf09cMBQOg/exec" method="POST">
+  
+  <form action="https://script.google.com/macros/s/AKfycbzgsBTH21zQk1Y66aTeOI94BvkuzEC-vmblDao5XOorP9yC8mv1Es0Q4c1snlau3BJd9w/exec" method="POST">
     <input type="text" name="name" placeholder="이름" required />
     <input type="tel" name="phone" placeholder="연락처 (예: 010-1234-5678)" required />
     <textarea name="message" placeholder="궁금한 내용을 적어주세요." required></textarea>
     <button type="submit">상담 신청</button>
   </form>
 
-  <p id="responseMsg">※ 전송 후 잠시만 기다려 주세요</p>
+  <p id="responseMsg">📩 전송 후 잠시만 기다려 주세요</p>
 </body>
 </html>
