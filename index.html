@@ -1,53 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>상담 신청</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 50px auto;
-      padding: 20px;
-      border-radius: 12px;
-      background: #f8f8f8;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 16px;
-    }
-    button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
 </head>
 <body>
-  <h2>상담 신청</h2>
-  <form action="https://script.google.com/macros/s/AKfycbxGCu5lCoN6kkI2oqTVcV6FV4nNJG7Sm7LRAwpxJuVhkf6sqpBjp8v7y6m2yOP-yZ0Wyg/exec" method="POST">
-    <label for="name">이름</label>
-    <input type="text" name="name" id="name" required>
-
-    <label for="phone">연락처</label>
-    <input type="text" name="phone" id="phone" required>
-
-    <label for="message">상담 내용</label>
-    <textarea name="message" id="message" rows="5" required></textarea>
-
-    <button type="submit">상담 신청</button>
+  <h2>상담 신청서</h2>
+  <form action="https://script.google.com/macros/s/AKfycbx-vAWOy-u-qc1FylTPz_WHVMVIFcICxArAa6xqn2h1RbweOEkb31wuGIm5mMlKZNbUzQ/exec" method="POST">
+    <label>이름: <input type="text" name="name" required></label><br>
+    <label>연락처: <input type="text" name="phone" required></label><br>
+    <label>내용: <textarea name="message" required></textarea></label><br>
+    <button type="submit">보내기</button>
   </form>
 </body>
 </html>
